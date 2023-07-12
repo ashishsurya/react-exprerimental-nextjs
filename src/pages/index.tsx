@@ -17,16 +17,20 @@ export default function Home() {
 	console.log(user);
 
 	if (!isAuthStatusLoaded) {
-		return <h1 className="text-9xl">Loading.....</h1>;
+		return (
+			<div className="grid place-items-center h-screen">
+				<h1 className="text-6xl ">Loading.....</h1>;
+			</div>
+		);
 	}
 
 	return (
 		<div
 			className={twMerge(inter.className, " grid place-items-center h-screen")}
 		>
-			<div className="">
+			<div className="text-center space-y-3">
 				<SignedIn>
-					<p>You are signed in!, can stay here</p>
+					<h1 className="text-7xl">You are signed in!, can stay here</h1>
 					<SignOutButton />
 
 					<h3 className="text-4xl">Your account linked to</h3>
@@ -37,7 +41,7 @@ export default function Home() {
 				</SignedIn>
 
 				<SignedOut>
-					<p>You are not signed in!, can't stay here</p>
+					<h1 className="text-7xl">You are not signed in!, can't stay here</h1>
 					<SignInButton />
 				</SignedOut>
 			</div>
