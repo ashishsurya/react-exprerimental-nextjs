@@ -4,11 +4,48 @@
 
 
 @layer base {
-  h1,h2,h3,h4,h5,h6 {
-    @apply font-bold tracking-tighter
+
+  body {
+    font-family: "Cal Sans";
+  }
+
+  h1 {
+
+    @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl
+  }
+  h2 {
+    
+
+
+    @apply after:scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0
+  }
+  h3 {
+  
+    @apply scroll-m-20 text-2xl font-semibold tracking-tight
+  }
+  h4 {
+    @apply scroll-m-20 text-xl font-semibold tracking-tight
+  }
+ p {
+   @apply leading-7 
+  }
+  blockquote {
+    @apply mt-6 border-l-2 pl-6 italic
+  }
+
+  code {
+    @apply  rounded bg-gray-100  p-2  font-mono text-sm font-semibold
+  }
+  .quote {
+    font-size: 24px;
+    letter-spacing: 0.02em;
+  }
+  .smaller_cal_sans {
+    font-size: 18px;
+    letter-spacing: 0.045em;
   }
 
   button {
-    @apply border px-4 py-2 font-bold hover:shadow-lg tracking-tighter capitalize
+    @apply border px-4 py-2 font-bold hover:shadow-lg  capitalize
   }
 }

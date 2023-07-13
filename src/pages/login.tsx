@@ -6,18 +6,11 @@ export default function LoginPage() {
 	if (!isLoaded) {
 		return null;
 	}
-
-	async function handleGoogleSignIn() {
+	async function handleOAuthSignIn({
+		strategy,
+	}: { strategy: "oauth_google" | "oauth_linkedin" }) {
 		await signIn?.authenticateWithRedirect({
-			strategy: "oauth_google",
-			redirectUrl: "/sso-callback",
-			redirectUrlComplete: "/",
-		});
-	}
-
-	async function handleLinkdedInSignIn() {
-		await signIn?.authenticateWithRedirect({
-			strategy: "oauth_linkedin",
+			strategy,
 			redirectUrl: "/sso-callback",
 			redirectUrlComplete: "/",
 		});
@@ -26,15 +19,21 @@ export default function LoginPage() {
 	return (
 		<div className="grid place-items-center h-screen">
 			<div className="space-y-3">
-				<h2 className="text-4xl">Sign In</h2>
+				<h1>Sign In</h1>
 				<p>{signIn.status}</p>
-				<button type="button" onClick={handleGoogleSignIn}>
+				<button
+					type="button"
+					onClick={() => handleOAuthSignIn({ strategy: "oauth_google" })}
+				>
 					Login with google
 				</button>
 
-        <br />
+				<br />
 
-				<button type="button" onClick={handleLinkdedInSignIn}>
+				<button
+					type="button"
+					onClick={() => handleOAuthSignIn({ strategy: "oauth_linkedin" })}
+				>
 					Login with LinkedIn
 				</button>
 			</div>

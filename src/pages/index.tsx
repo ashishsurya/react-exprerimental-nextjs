@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Inter } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import {
 	SignInButton,
@@ -7,16 +6,22 @@ import {
 	SignedIn,
 	SignedOut,
 	UserButton,
+	useClerk,
 	useUser,
+	clerkClient,
 } from "@clerk/nextjs";
 import { ExternalAccountResource } from "@clerk/types";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
 	const { user, isLoaded: isAuthStatusLoaded } = useUser();
 
-	console.log(user);
+	// console.log(user);
+
+	const getGoogleOAuthToken = async ({ userId }: { userId: string }) => {
+		const res = await fetch(`/api/token/google?userId=${userId}`);
+		const data = await res.json();
+		console.log(data);
+	};
 
 	if (!isAuthStatusLoaded) {
 		return (
@@ -27,15 +32,14 @@ export default function Home() {
 	}
 
 	return (
-		<div
-			className={twMerge(inter.className, " grid place-items-center h-screen")}
-		>
+		<div className={twMerge(" grid place-items-center h-screen")}>
 			<div className=" space-y-3">
 				<SignedIn>
 					<h1 className="text-6xl">Welcome, {user?.fullName}</h1>
 					<SignOutButton />
+					<br />
 
-					<h3 className="text-4xl">Your account linked to</h3>
+					<h3>Your account linked to</h3>
 					{/* <pre className="text-[8px]">{JSON.stringify(user, null, 2)}</pre> */}
 					{/* {user?.primaryEmailAddress?.linkedTo.map((provider) => (
 						<p key={provider.id} className="capitalize">
@@ -43,11 +47,18 @@ export default function Home() {
 						</p>
 					))} */}
 
+					<button
+						type="button"
+						onClick={() => getGoogleOAuthToken({ userId: user?.id as string })}
+					>
+						get google oauth token
+					</button>
+
 					<ConnectedAccounts accounts={user?.externalAccounts} />
 				</SignedIn>
 
 				<SignedOut>
-					<h1 className="text-7xl">You are not signed in!, can't stay here</h1>
+					<h1>You are not signed in!, can't stay here</h1>
 					<SignInButton />
 				</SignedOut>
 			</div>
@@ -78,7 +89,7 @@ const ConnectedAccounts: React.FC<ConnectedAccountProps> = ({ accounts }) => {
 						alt=""
 						className="w-10 h-10 rounded-full"
 					/>
-					<p className="capitalize font-semibold">{account.provider}</p>
+					<p className="capitalize">{account.provider}</p>
 				</div>
 			))}
 		</div>
